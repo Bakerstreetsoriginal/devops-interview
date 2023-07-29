@@ -1,0 +1,30 @@
+---
+- name: Run and build docker container
+  hosts: localhost
+  become: true
+  vars:
+    image_name : helloworld
+    image_tag : 1.0
+    container_name : helloworld-container
+    docker_file : docker-helloworld
+  
+  tasks:
+    - name: build docker container
+      community.docker.docker_image:
+        build:
+          dockerfile: "{{ docker_file }}"
+          path: .
+        name: "{{ image_name }}"
+        tag: "{{ image_tag }}"
+        source: build
+
+    - name: run the docker container
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        image: '{{ image_name }}:{{ image_tag }}'
+        ports:
+          - "8080:8080"
+
+
+
+    

@@ -1,0 +1,26 @@
+##Notes:
+
+####Vagrant
+- Vagrant up was not completing properly, I increased the boot timeout parameter,
+This seems to have resolved the issue.
+It could also be that the timeout was because of the initial time need to download the vm to my local system.
+
+####Hello world springboot application
+
+I decided to build the java application straight in the docker environment.
+
+
+####docker-playbook
+
+- when creating the alias playbook I noticed docker-compose is not installed by default, so I updated the playbook to make sure we have docker-compose also installed.
+
+
+####os-playbook
+
+- the secret file: We can create a file that only root can read. however in this current state, any user can read the playbook and so discover the contents of that file. If we really want to be super secure on the contents we should consider using some form of secrets manager and then when running the playbook extract the values from there. I did not consider this in scope of this exercise
+- Currently aliases are created for all users, however all existing terminals have to be rebooted after the playbook has been ran for tha aliases to be available.
+
+####helloworld-playbook
+
+- I added an port exposure to the docker container so we can curl to the webserver
+- I added vars for image, tag and container name for reusability
