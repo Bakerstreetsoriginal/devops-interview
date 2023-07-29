@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-#define starting image
-FROM eclipse-temurin:17-jdk-jammy
+#define builder container
+FROM eclipse-temurin:17-jdk-jammy AS builder
 
 #set the working directory
 WORKDIR /app
@@ -12,5 +12,14 @@ COPY ./helloworld /app
 #build the java image in the container
 RUN ./gradlew clean build
 
+#start from java runtime for final container
+FROM eclipse-temurin:17-jre-jammy
+
+#set the working directory for final image
+WORKDIR /app
+
+#COPY jar file from builder
+COPY --from=builder /app/build/libs/helloworld.jar ./
+
 #when the container starts this command will start the java application
-CMD java -jar build/libs/helloworld.jar
+CMD java -jar ./helloworld.jar

@@ -7,7 +7,8 @@ It could also be that the timeout was because of the initial time need to downlo
 
 ####Hello world springboot application
 
-I decided to build the java application straight in the docker environment.
+- I decided to build the java application straight in the docker environment.
+- I found a way to use a builder container in the docker file, causing the file size of the actual image to go from 750 MB to 286 MB
 
 
 ####docker-playbook
